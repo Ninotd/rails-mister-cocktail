@@ -1,0 +1,23 @@
+    <div class="container">
+      <div class="row">
+        <% @cocktails.each do |cocktail| %>
+        <div class="col-xs-12 col-sm-4 card-link">
+          <%= link_to cocktail_path(cocktail) do %>
+            <div class="card" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('https://stevethebartender.com.au/wp-content/uploads/2015/11/winter-sun-cocktail.jpg');">
+              <div class="card-description">
+                <h2><%= cocktail.name %></h2>
+                <% if cocktail.doses.count != 0 %>
+                <p>Number of ingredients : <%= cocktail.doses.count %></p>
+                <% else %>
+                <p>Complète ton Cocktail !</p>
+                <% end %>
+              </div>
+            </div>
+            <% end %>
+        </div>
+        <% end %>
+      </div>
+    </div>
+
+
+

@@ -1,0 +1,30 @@
+<div class="banner" style="background-image: linear-gradient(-225deg, rgba(0,101,168,0.6) 0%, rgba(0,36,61,0.6) 50%), url('https://stevethebartender.com.au/wp-content/uploads/2015/11/winter-sun-cocktail.jpg');">
+  <div class="banner-content">
+    <h1><%= @cocktail.name %></h1>
+  </div>
+</div>
+
+<div class="container">
+  <div class = "cocktail">
+    <div class="description">
+
+    </div>
+    <div class = "ingredient">
+
+    </div>
+  </div>
+</div>
+
+<h1><%= @cocktail.name %></h1>
+<%= link_to "Add a dose", new_cocktail_dose_path(@cocktail) %>
+
+<ul>
+  <% @cocktail.doses.each do |dose| %>
+  <li> <%= dose.description %> <%= dose.ingredient.name %>
+    <%= link_to "delete", dose_path(dose), method: :delete,
+    data: { confirm: "are you sure?"} %>
+  </li>
+  <% end %>
+</ul>
+
+<%= link_to "Back to Cocktails list", cocktails_path %>
