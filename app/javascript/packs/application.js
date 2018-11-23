@@ -10,3 +10,11 @@
 console.log('Hello World from Webpacker')
 
 import 'bootstrap';
+
+$('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').focus()
+})
+
+$('#ingredientModal').on('shown.bs.modal', function () {
+  $('#myInput').focus()
+})

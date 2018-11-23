@@ -13,8 +13,17 @@
 
   <body>
     <div class="navbar-wagon">
-      <%= link_to "Add a cocktail", new_cocktail_path, class: "btn-medium" %>
+      <button type="button" class="btn btn-medium" data-toggle="modal" data-target="#myModal" data-whatever="@fat">New Cocktail</button>
+      <form action="/cocktails">
+      <input type="text" placeholder="Search for a cocktail..." name="cocktail" class="search-form">
+      <input type="submit" value="filter">
+      </form>
+      <form action="/cocktails">
+      <input type="text" placeholder="Search for an ingredient..." name="ingredient" class="search-form">
+      <input type="submit" value="filter">
+      </form>
     </div>
+
     <%= yield %>
 
 

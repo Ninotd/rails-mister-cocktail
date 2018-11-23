@@ -1,4 +1,8 @@
-<div class="banner" style="background-image: linear-gradient(-225deg, rgba(0,101,168,0.6) 0%, rgba(0,36,61,0.6) 50%), url('https://stevethebartender.com.au/wp-content/uploads/2015/11/winter-sun-cocktail.jpg');">
+<% if @cocktail[:photo].nil? == false %>
+  <div class="banner" style="background-image: linear-gradient(-225deg, rgba(0,101,168,0.6) 0%, rgba(0,36,61,0.6) 50%), url('<%= cl_image_path @cocktail.photo, crop: :fill%>')">
+<% else %>
+  <div class="banner" style="background-image: linear-gradient(-225deg, rgba(0,101,168,0.6) 0%, rgba(0,36,61,0.6) 50%), url('https://gettaphunter.com/wp-content/uploads/2016/08/bar-11.jpg')">
+<% end %>
   <div class="banner-content">
     <h1><%= @cocktail.name %></h1>
   </div>
@@ -7,24 +11,47 @@
 <div class="container">
   <div class = "cocktail">
     <div class="description">
-
+      <h3> Description </h3>
+      <p> <%= @cocktail.description %></p>
     </div>
     <div class = "ingredient">
+      <h3> Ingredients </h3>
+      <ul class = "dose-list">
+        <% @cocktail.doses.each do |dose| %>
+        <li class = "cocktail-dose">  <%= dose.ingredient.name %> - <%= dose.description %>
+          <%= link_to dose_path(dose), method: :delete,
+          data: { confirm: "are you sure?"} do %>
+          <i class="fa fa-trash-alt" aria-hidden="true"></i>
+          <% end %>
+        </li>
+        <% end %>
+        <button type="button" class="btn btn-treehouse" data-toggle="modal" data-target="#ingredientModal" data-whatever="" id="ingredient">Add an ingredient</button>
+      </ul>
+    </div>
+  </div>
+  <%= link_to "Back to Cocktails list", cocktails_path, class: "btn btn-treehouse" %>
+</div>
 
+
+<div class="modal fade" id="ingredientModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">New ingredient</h4>
+      </div>
+      <div class="modal-body">
+        <%= simple_form_for [@cocktail, @dose] do |f| %>
+          <%= f.input :description %>
+          <%= f.association :ingredient, prompt: "Choose an ingredient" %>
+          <div class="modal-footer">
+            <%= f.submit "add a dose", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
 
-<h1><%= @cocktail.name %></h1>
-<%= link_to "Add a dose", new_cocktail_dose_path(@cocktail) %>
 
-<ul>
-  <% @cocktail.doses.each do |dose| %>
-  <li> <%= dose.description %> <%= dose.ingredient.name %>
-    <%= link_to "delete", dose_path(dose), method: :delete,
-    data: { confirm: "are you sure?"} %>
-  </li>
-  <% end %>
-</ul>
 
-<%= link_to "Back to Cocktails list", cocktails_path %>
